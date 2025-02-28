@@ -10,6 +10,15 @@ from pynput.keyboard import Controller as KeyboardController
 from pynput.keyboard import Key
 from pynput.mouse import Controller as MouseController
 
+if platform.system() == "Darwin":
+    # If running on macOS, attempt to set the application to run in the background to prevent the bouncing Python rocket icon in the dock
+    try:
+        from AppKit import NSBundle
+        app_info = NSBundle.mainBundle().infoDictionary()
+        app_info["LSBackgroundOnly"] = "1"
+    except ImportError:
+        pass
+
 mouse = MouseController()
 keyboard = KeyboardController()
 
